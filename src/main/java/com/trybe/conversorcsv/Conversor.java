@@ -1,6 +1,10 @@
 package com.trybe.conversorcsv;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class Conversor {
@@ -16,6 +20,7 @@ public class Conversor {
   public static void main(String[] args) throws IOException {
     File pastaDeEntradas = new File("./entradas/");
     File pastaDeSaidas = new File("./saidas/");
+
     new Conversor().converterPasta(pastaDeEntradas, pastaDeSaidas);
   }
 
@@ -35,7 +40,56 @@ public class Conversor {
    *                     gravar os arquivos de saída.
    */
   public void converterPasta(File pastaDeEntradas, File pastaDeSaidas) throws IOException {
-    // TODO: Implementar.
-  }
+    if (!pastaDeSaidas.exists()) {
+      pastaDeSaidas.createNewFile();
+    }
 
+    FileReader leitorArquivo = null;
+    BufferedReader bufferedReader = null;
+    FileWriter escritorArquivo = null;
+    BufferedWriter bufferedWriter = null;
+
+    try {
+      for (File file : pastaDeEntradas.listFiles()) {
+
+        leitorArquivo = new FileReader(file);
+        bufferedReader = new BufferedReader(leitorArquivo);
+
+        File saidas = new File(pastaDeSaidas, file.getName());
+
+        escritorArquivo = new FileWriter(saidas);
+        bufferedWriter = new BufferedWriter(escritorArquivo);
+
+        String linha = bufferedReader.readLine();
+
+        int count = 0;
+        do {
+          if (count == 0) {
+            bufferedWriter.write(linha);
+            linha = bufferedReader.readLine();
+          }
+
+          // faz a modificações
+          // escreve no novo arquivo
+
+          linha = bufferedReader.readLine();
+          count += 1;
+
+        } while (linha != null);
+
+        leitorArquivo.close();
+        bufferedReader.close();
+        escritorArquivo.close();
+        bufferedWriter.close();
+      }
+
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }
+
+// 1-ler o aruivo
+// 2-alterar o arquivo
+// 3-salvar o arquivo
+// 4-escrever o novo arquivo
