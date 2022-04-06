@@ -6,10 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+// import java.text.DateFormat;
+// import java.text.SimpleDateFormat;
 
-import javax.swing.text.MaskFormatter;
+// import javax.swing.text.MaskFormatter;
 
 public class Conversor {
 
@@ -70,7 +70,7 @@ public class Conversor {
         int count = 0;
         do {
           if (count == 0) {
-            bufferedWriter.write(linha);
+            bufferedWriter.write(linha + "\n");
             linha = bufferedReader.readLine();
           }
           // faz a formatação
@@ -81,16 +81,16 @@ public class Conversor {
           String email = conteudoLinha[2];
           String cpf = conteudoLinha[3];
 
-          MaskFormatter mask = new MaskFormatter("###.###.###-##");
-          String cpfFormatado = mask.valueToString(cpf);
+          // MaskFormatter mask = new MaskFormatter("###.###.###-##");
+          // String cpfFormatado = mask.valueToString(cpf);
 
-          DateFormat formatUs = new SimpleDateFormat("yyyy-MM-dd");
-          String dataFormatada = formatUs.parse(data).toString();
+          // DateFormat formatUs = new SimpleDateFormat("yyyy-MM-dd");
+          // String dataFormatada = formatUs.parse(data).toString();
 
           String linhaFormatada = nome + "," + data + "," + email + "," + cpf;
 
           // escreve no novo arquivo
-          bufferedWriter.write(linhaFormatada);
+          bufferedWriter.write(linhaFormatada + "\n");
           linha = bufferedReader.readLine();
           count += 1;
 
