@@ -64,7 +64,6 @@ public class Conversor {
         bufferedWriter = new BufferedWriter(escritorArquivo);
 
         String linha = bufferedReader.readLine();
-        System.out.println(linha);
 
         int count = 0;
         do {
@@ -72,30 +71,26 @@ public class Conversor {
             bufferedWriter.write(linha + "\n");
             linha = bufferedReader.readLine();
           }
-          // faz a formatação
           String[] conteudoLinha = linha.split(",");
-
-          String nome = conteudoLinha[0].toUpperCase();
-          String[] data = conteudoLinha[1].split("/");
-          String email = conteudoLinha[2];
-          String cpf = conteudoLinha[3];
 
           MaskFormatter formatoCpf = new MaskFormatter("###.###.###-##");
           JFormattedTextField cpfFormatado = new JFormattedTextField(formatoCpf);
+
+          // formatação cpf
+          String cpf = conteudoLinha[3];
           cpfFormatado.setText(cpf);
           cpf = cpfFormatado.getText();
+          // formatação nome
+          String nome = conteudoLinha[0];
+          String nomeFormatado = nome.toUpperCase();
 
-          // DateFormat formatUs = new SimpleDateFormat("yyyy-MM-dd");
-          // String dataFormatada = formatUs.parse(data).toString();
-
-          // LocalDate dataNaoFormatada = LocalDate.parse(data);
-          // DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd-MM-uuuu");
-          // String dataFormatada = formatoData.format(dataNaoFormatada);
-
+          // formatação data
+          String[] data = conteudoLinha[1].split("/");
           String dataFormatada = data[2] + "-" + data[1] + "-" + data[0];
-          System.out.println("DATA: " + dataFormatada);
 
-          String linhaFormatada = nome + "," + dataFormatada + "," + email + "," + cpf;
+          String email = conteudoLinha[2];
+
+          String linhaFormatada = nomeFormatado + "," + dataFormatada + "," + email + "," + cpf;
 
           // escreve no novo arquivo
           bufferedWriter.write(linhaFormatada + "\n");
@@ -104,7 +99,7 @@ public class Conversor {
 
           bufferedWriter.flush();
         } while (linha != null);
-        System.out.println("LINHA 99");
+
         leitorArquivo.close();
         bufferedReader.close();
         escritorArquivo.close();
