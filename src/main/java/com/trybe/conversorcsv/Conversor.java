@@ -6,6 +6,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
+import javax.swing.text.MaskFormatter;
 
 public class Conversor {
 
@@ -55,12 +59,13 @@ public class Conversor {
         leitorArquivo = new FileReader(file);
         bufferedReader = new BufferedReader(leitorArquivo);
 
-        File saidas = new File(pastaDeSaidas, file.getName());
+        File novoArquivo = new File(pastaDeSaidas, file.getName());
 
-        escritorArquivo = new FileWriter(saidas);
+        escritorArquivo = new FileWriter(novoArquivo);
         bufferedWriter = new BufferedWriter(escritorArquivo);
 
         String linha = bufferedReader.readLine();
+        System.out.println(linha);
 
         int count = 0;
         do {
@@ -68,17 +73,30 @@ public class Conversor {
             bufferedWriter.write(linha);
             linha = bufferedReader.readLine();
           }
+          // faz a formatação
+          String[] conteudoLinha = linha.split(",");
 
-          // faz a modificações
+          String nome = conteudoLinha[0].toUpperCase();
+          String data = conteudoLinha[1];
+          String email = conteudoLinha[2];
+          String cpf = conteudoLinha[3];
+
+          MaskFormatter mask = new MaskFormatter("###.###.###-##");
+          String cpfFormatado = mask.valueToString(cpf);
+
+          DateFormat formatUs = new SimpleDateFormat("yyyy-MM-dd");
+          String dataFormatada = formatUs.parse(data).toString();
+
+          String linhaFormatada = nome + "," + data + "," + email + "," + cpf;
+
           // escreve no novo arquivo
-
+          bufferedWriter.write(linhaFormatada);
           linha = bufferedReader.readLine();
           count += 1;
 
+          bufferedWriter.flush();
         } while (linha != null);
-
-        bufferedWriter.flush();
-
+        System.out.println("LINHA 99");
         leitorArquivo.close();
         bufferedReader.close();
         escritorArquivo.close();
