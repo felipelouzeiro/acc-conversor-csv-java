@@ -41,7 +41,7 @@ public class Conversor {
    */
   public void converterPasta(File pastaDeEntradas, File pastaDeSaidas) throws IOException {
     if (!pastaDeSaidas.exists()) {
-      pastaDeSaidas.createNewFile();
+      pastaDeSaidas.mkdir();
     }
 
     FileReader leitorArquivo = null;
@@ -77,6 +77,8 @@ public class Conversor {
 
         } while (linha != null);
 
+        bufferedWriter.flush();
+
         leitorArquivo.close();
         bufferedReader.close();
         escritorArquivo.close();
@@ -89,7 +91,8 @@ public class Conversor {
   }
 }
 
-// 1-ler o aruivo
-// 2-alterar o arquivo
-// 3-salvar o arquivo
-// 4-escrever o novo arquivo
+// -criar diretório - ok
+// -ler o arquivos- ok
+// -alterar o arquivo
+// -salvar o arquivo
+// -escrever o novo arquivo
