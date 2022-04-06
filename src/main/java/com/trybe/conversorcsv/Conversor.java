@@ -6,10 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-// import java.text.DateFormat;
-// import java.text.SimpleDateFormat;
 
-// import javax.swing.text.MaskFormatter;
+import javax.swing.JFormattedTextField;
+import javax.swing.text.MaskFormatter;
 
 public class Conversor {
 
@@ -77,17 +76,26 @@ public class Conversor {
           String[] conteudoLinha = linha.split(",");
 
           String nome = conteudoLinha[0].toUpperCase();
-          String data = conteudoLinha[1];
+          String[] data = conteudoLinha[1].split("/");
           String email = conteudoLinha[2];
           String cpf = conteudoLinha[3];
 
-          // MaskFormatter mask = new MaskFormatter("###.###.###-##");
-          // String cpfFormatado = mask.valueToString(cpf);
+          MaskFormatter formatoCpf = new MaskFormatter("###.###.###-##");
+          JFormattedTextField cpfFormatado = new JFormattedTextField(formatoCpf);
+          cpfFormatado.setText(cpf);
+          cpf = cpfFormatado.getText();
 
           // DateFormat formatUs = new SimpleDateFormat("yyyy-MM-dd");
           // String dataFormatada = formatUs.parse(data).toString();
 
-          String linhaFormatada = nome + "," + data + "," + email + "," + cpf;
+          // LocalDate dataNaoFormatada = LocalDate.parse(data);
+          // DateTimeFormatter formatoData = DateTimeFormatter.ofPattern("dd-MM-uuuu");
+          // String dataFormatada = formatoData.format(dataNaoFormatada);
+
+          String dataFormatada = data[2] + "-" + data[1] + "-" + data[0];
+          System.out.println("DATA: " + dataFormatada);
+
+          String linhaFormatada = nome + "," + dataFormatada + "," + email + "," + cpf;
 
           // escreve no novo arquivo
           bufferedWriter.write(linhaFormatada + "\n");
