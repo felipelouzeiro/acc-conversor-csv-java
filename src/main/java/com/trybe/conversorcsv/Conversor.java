@@ -111,9 +111,3 @@ public class Conversor {
     }
   }
 }
-
-// -criar diretório - ok
-// -ler o arquivos- ok
-// -alterar o arquivo
-// -salvar o arquivo
-// -escrever o novo arquivo
